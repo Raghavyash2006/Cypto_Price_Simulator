@@ -1,0 +1,309 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  font-family: 'Inter', 'SF Pro Display', 'Segoe UI', system-ui, sans-serif;
+  --page-bg: #020617;
+  --page-bg-alt: #07111f;
+  --page-bg-accent-1: rgba(34, 211, 238, 0.18);
+  --page-bg-accent-2: rgba(16, 185, 129, 0.12);
+  --page-bg-accent-3: rgba(245, 158, 11, 0.1);
+  --page-surface: rgba(15, 23, 42, 0.6);
+  --page-surface-strong: rgba(15, 23, 42, 0.86);
+  --page-surface-muted: rgba(30, 41, 59, 0.46);
+  --page-border: rgba(148, 163, 184, 0.18);
+  --page-border-strong: rgba(148, 163, 184, 0.3);
+  --page-text: #e2e8f0;
+  --page-muted: #94a3b8;
+  --page-accent: #22c55e;
+  --page-accent-2: #06b6d4;
+  --page-accent-3: #f59e0b;
+  --page-shadow: 0 24px 80px -32px rgba(2, 6, 23, 0.9);
+  --page-shadow-soft: 0 16px 50px -28px rgba(2, 6, 23, 0.7);
+  background: var(--page-bg);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --page-bg: #f4f7fb;
+  --page-bg-alt: #edf2f9;
+  --page-bg-accent-1: rgba(14, 165, 233, 0.12);
+  --page-bg-accent-2: rgba(16, 185, 129, 0.08);
+  --page-bg-accent-3: rgba(245, 158, 11, 0.08);
+  --page-surface: rgba(255, 255, 255, 0.78);
+  --page-surface-strong: rgba(255, 255, 255, 0.96);
+  --page-surface-muted: rgba(241, 245, 249, 0.92);
+  --page-border: rgba(148, 163, 184, 0.16);
+  --page-border-strong: rgba(148, 163, 184, 0.26);
+  --page-text: #0f172a;
+  --page-muted: #516073;
+  --page-accent: #0f766e;
+  --page-accent-2: #0284c7;
+  --page-accent-3: #f59e0b;
+  --page-shadow: 0 24px 70px -30px rgba(15, 23, 42, 0.16);
+  --page-shadow-soft: 0 16px 45px -24px rgba(15, 23, 42, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--page-bg);
+}
+
+/* Prevent decorative elements or wide canvases from creating horizontal scroll */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Ensure canvas-based charts scale within their containers */
+canvas {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, var(--page-bg-accent-1), transparent 28%),
+    radial-gradient(circle at top right, var(--page-bg-accent-3), transparent 24%),
+    radial-gradient(circle at bottom left, var(--page-bg-accent-2), transparent 30%),
+    linear-gradient(180deg, var(--page-bg-alt), var(--page-bg));
+  color: var(--page-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition:
+    background 240ms ease,
+    color 240ms ease;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+p {
+  line-height: 1.65;
+}
+
+a {
+  text-decoration: none;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 85%);
+  opacity: 0.5;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: auto -10% -18% auto;
+  width: 30rem;
+  height: 30rem;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--page-bg-accent-1), transparent 68%);
+  filter: blur(20px);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    border: 1px solid var(--page-border);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--page-surface-strong) 88%, transparent), var(--page-surface));
+    backdrop-filter: blur(24px);
+    box-shadow: var(--page-shadow);
+    transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease, background 200ms ease;
+  }
+
+  .glass-panel-strong {
+    border: 1px solid var(--page-border-strong);
+    background: var(--page-surface-strong);
+    backdrop-filter: blur(30px);
+    box-shadow: var(--page-shadow);
+  }
+
+  .app-panel {
+    border: 1px solid var(--page-border);
+    background: linear-gradient(180deg, var(--page-surface-strong), var(--page-surface));
+    box-shadow: var(--page-shadow-soft);
+    backdrop-filter: blur(24px);
+    transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease, background 200ms ease;
+  }
+
+  .app-panel-muted {
+    border: 1px solid var(--page-border);
+    background: var(--page-surface-muted);
+    box-shadow: var(--page-shadow-soft);
+    backdrop-filter: blur(18px);
+    transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease, background 200ms ease;
+  }
+
+  .mesh-gradient {
+    background-image:
+      radial-gradient(circle at top left, color-mix(in srgb, var(--page-accent-2) 36%, transparent), transparent 24%),
+      radial-gradient(circle at top right, color-mix(in srgb, var(--page-accent-3) 26%, transparent), transparent 20%),
+      linear-gradient(135deg, color-mix(in srgb, var(--page-accent) 20%, transparent), color-mix(in srgb, var(--page-accent-2) 14%, transparent));
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-float-soft {
+    animation: float-soft 8s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    background-size: 200% 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;
+  }
+
+  .section-title {
+    @apply text-xs font-semibold uppercase tracking-[0.35em] text-[color:var(--page-muted)];
+  }
+
+  .section-heading {
+    @apply text-balance text-2xl font-semibold tracking-tight text-[color:var(--page-text)] sm:text-3xl;
+  }
+
+  .section-subtitle {
+    @apply mt-2 max-w-2xl text-sm leading-7 text-[color:var(--page-muted)];
+  }
+
+  .empty-state-panel {
+    @apply rounded-[1.5rem] border border-[color:var(--page-border)] bg-[color:var(--page-surface)] p-5 text-sm text-[color:var(--page-muted)];
+  }
+}
+
+[data-theme='light'] .glass-panel,
+[data-theme='light'] .glass-panel-strong,
+[data-theme='light'] .app-panel,
+[data-theme='light'] .app-panel-muted {
+  box-shadow: 0 18px 55px -30px rgba(15, 23, 42, 0.18);
+}
+
+[data-theme='light'] .text-white,
+[data-theme='light'] .text-slate-100,
+[data-theme='light'] .text-slate-200 {
+  color: var(--page-text) !important;
+}
+
+[data-theme='light'] .text-slate-300,
+[data-theme='light'] .text-slate-400 {
+  color: var(--page-muted) !important;
+}
+
+[data-theme='light'] .border-white\/10,
+[data-theme='light'] .border-white\/12,
+[data-theme='light'] .border-white\/14 {
+  border-color: var(--page-border) !important;
+}
+
+[data-theme='light'] .bg-slate-950,
+[data-theme='light'] .bg-slate-900,
+[data-theme='light'] .bg-slate-800,
+[data-theme='light'] .bg-black {
+  background-color: var(--page-surface-strong) !important;
+}
+
+[data-theme='light'] .bg-white\/5,
+[data-theme='light'] .bg-white\/7,
+[data-theme='light'] .bg-white\/8,
+[data-theme='light'] .bg-white\/10 {
+  background-color: var(--page-surface) !important;
+}
+
+[data-theme='light'] .glass-panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.76));
+}
+
+[data-theme='light'] .glass-panel-strong,
+[data-theme='light'] .app-panel,
+[data-theme='light'] .app-panel-muted {
+  background: rgba(255, 255, 255, 0.92) !important;
+}
+
+[data-theme='light'] .shadow-\[0_40px_120px_rgba\(2\,6\,23\,0\.82\)\],
+[data-theme='light'] .shadow-\[0_40px_120px_rgba\(2\,6\,23\,0\.95\)\] {
+  box-shadow: 0 28px 80px -36px rgba(15, 23, 42, 0.16) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: color-mix(in srgb, var(--page-accent-2) 28%, transparent);
+  color: var(--page-text);
+}

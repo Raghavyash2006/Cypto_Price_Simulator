@@ -1,0 +1,5 @@
+- Keep the frontend and backend as separate workspace apps under `frontend/` and `backend/`.
+- Favor small, composable components and route-level pages in the React app.
+- Keep API logic in the backend `src/api/` tree, with middleware, utils, services, and models separated.
+- Prefer explicit environment variables and avoid hardcoded runtime configuration.
+- Keep changes production-oriented: centralized error handling, auth middleware, and reusable services first.
